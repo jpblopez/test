@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 const express = require("express");
 const fileUpload = require("express-fileupload");
 const connectDB = require("./config/database");
-const userRoutes = require("./routes/users");
+const customerRoutes = require("./routes/customers");
 
 dotenv.config();
 
@@ -15,8 +15,8 @@ app.use(express.json());
 app.use(fileUpload());
 
 // Register route 
-// Address : localhost:3000/api/users
-app.use("/api/users", userRoutes);
+// Address : localhost:3000/api/customer
+app.use("/api/customer", customerRoutes);
 
 
 app.listen(process.env.PORT, () => {

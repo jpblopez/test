@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
 const connectDB = require("./config/database");
 const mongoose = require("mongoose");
-const User = require("./models/User");
+const Customer = require("./models/Customer");
 
 dotenv.config();
 
@@ -11,7 +11,7 @@ dotenv.config();
     await connectDB();
 
     // Create an array of user data to be seeded
-    const userData = [
+    const customerData = [
       {
         name: "John Doe",
         imagePath: "/images/john.jpg",
@@ -27,10 +27,10 @@ dotenv.config();
     const seedDatabase = async () => {
       try {
         // Clear existing users
-        await User.deleteMany();
+        await Customer.deleteMany();
 
         // Insert the user data
-        await User.insertMany(userData);
+        await Customer.insertMany(userData);
 
         console.log("Database seeded successfully");
         process.exit(0); // Exit the script

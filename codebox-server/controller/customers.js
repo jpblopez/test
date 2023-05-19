@@ -1,10 +1,10 @@
 const asyncHandler = require("express-async-handler");
-const User = require("../models/User");
+const Customer = require("../models/Customer");
 
-// GETS ALL USER
-exports.getUsers = asyncHandler(async (req, res, next) => {
+// GETS ALL CUSTOMER
+exports.getCustomers = asyncHandler(async (req, res, next) => {
     try {
-        const data = await User.find();
+        const data = await Customer.find();
         res.status(200).json(data);
     }
     catch (error) {
@@ -12,14 +12,14 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
     }
 });
 
-// GETS SPECIFIC USER
-exports.getUser = asyncHandler(async (req, res, next) => {
+// GETS SPECIFIC CUSTOMER
+exports.getCustomer = asyncHandler(async (req, res, next) => {
     try {
-        const user = await User.findById(req.params.id);
+        const customer = await Customer.findById(req.params.id);
 
         res.status(200).json({
             success: true,
-            data: user
+            data: customer
         });
     }
     catch (error) {
@@ -27,14 +27,14 @@ exports.getUser = asyncHandler(async (req, res, next) => {
     }
 });
 
-// ADDS USER
-exports.createUser = asyncHandler(async (req, res, next) => {
+// ADDS CUSTOMER
+exports.createCustomer = asyncHandler(async (req, res, next) => {
     try {
-        const user = await User.create(req.body);
+        const customer = await Customer.create(req.body);
 
         res.status(201).json({
             success: true,
-            data: user
+            data: customer
         });
     }
     catch (error) {
@@ -42,16 +42,16 @@ exports.createUser = asyncHandler(async (req, res, next) => {
     }
 });
 
-// UPDATES USER
-exports.updateUser = asyncHandler(async (req, res, next) => {
+// UPDATES CUSTOMER
+exports.updateCustomer = asyncHandler(async (req, res, next) => {
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+        const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, {
             new: true
         });
     
         res.status(200).json({
             success: true,
-            data: user
+            data: customer
         });
     }
     catch (error) {
@@ -59,10 +59,10 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
     }
 });
 
-// DELETE USER
-exports.deleteUser = asyncHandler(async (req, res, next) => {
+// DELETE CUSTOMER
+exports.deleteCustomer = asyncHandler(async (req, res, next) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id);
+        const customer = await Customer.findByIdAndDelete(req.params.id);
 
         res.status(200).json({
             success: true,
