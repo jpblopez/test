@@ -14,11 +14,11 @@ dotenv.config();
     const customerData = [
       {
         name: "John Doe",
-        imagePath: "/images/john.jpg",
+        imagePath: "/uploads/john.jpg",
       },
       {
         name: "Jane Smith",
-        imagePath: "/images/jane.jpg",
+        imagePath: "/uploads/jane.jpg",
       },
       // Add more user objects here as needed
     ];
@@ -30,7 +30,7 @@ dotenv.config();
         await Customer.deleteMany();
 
         // Insert the user data
-        await Customer.insertMany(userData);
+        await Customer.insertMany(customerData);
 
         console.log("Database seeded successfully");
         process.exit(0); // Exit the script

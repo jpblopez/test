@@ -7,9 +7,10 @@
     "dev": "nodemon server.js",
     "seed": "node seeder.js"
   },
-  "author": "",
+  "author": "dinodaking",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "express-fileupload": "^1.4.0",
