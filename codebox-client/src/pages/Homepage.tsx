@@ -4,6 +4,7 @@ import { Layout } from "../components/Layout";
 import { Box, Button, Stack } from "@mui/material";
 import { DataGrid, GridColDef, GridRowId, useGridApiRef } from '@mui/x-data-grid';
 import { Customer } from "../models/customer";
+import { fetchCustomers } from "../helpers/helpers";
 import dayjs from "dayjs";
 
 const Homepage = () => {
@@ -12,16 +13,14 @@ const Homepage = () => {
     const gridApiRef = useGridApiRef();
     const navigate = useNavigate();
   
-    async function typedFetch<T>(url: string): Promise<T> {
-        const response = await fetch(url);
-        const data = await response.json();
-        return data as T;
-    }
-  
     const getCustomers = async () => {
-      const data = await typedFetch<Customer[]>('http://localhost:5000/api/customers');
-      if (data) {
-        setCustomers(data);
+      try {
+        const data = await fetchCustomers<Customer[]>('http://localhost:5000/api/v1/customers');
+        if (data) {
+          setCustomers(data);
+        }
+      } catch (error) {
+        throw ("Error fetching customers!");
       }
     };
 
@@ -31,7 +30,7 @@ const Homepage = () => {
       }
 
       try {
-        const response = await fetch(`http://localhost:5000/api/customers/${id}`, {
+        const response = await fetch(`http://localhost:5000/api/v1/customers/${id}`, {
           method: "DELETE",
         });
 
@@ -40,7 +39,7 @@ const Homepage = () => {
           getCustomers();
         }
       } catch (error) {
-        console.log("DELETE CUSTOMER ERROR", error);
+        throw ("DELETE CUSTOMER ERROR");
       }
     }
 
@@ -51,10 +50,22 @@ const Homepage = () => {
         
       navigate(`/${id}`);
     }
+
+    const addCustomer = () => {
+      navigate(`/add`);
+    }
+
+    const editCustomer = (id: string) => {
+      if (!id) {
+        return;
+      }
+
+      navigate(`/${id}/edit`);
+    }
   
     useEffect(() => {
       getCustomers();
-    }, []);
+    }, [customers]);
 
     const handleSelectionChange = (selection: GridRowId[]) => {
       if (selection.length > 1){
@@ -130,7 +141,7 @@ const Homepage = () => {
           variant="contained"
           color="primary"
           onClick={() => {
-            console.log("ADD Clicked!");
+            addCustomer();
           }}
           >
             Add
@@ -140,7 +151,7 @@ const Homepage = () => {
             variant="contained"
             color="primary"
             onClick={() => {
-              console.log("EDIT Clicked!");
+              editCustomer(selectedCustomer.toString());
             }}
           >
             Edit
